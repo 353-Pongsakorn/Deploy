@@ -60,6 +60,18 @@ app.use(cors({
 
 ---
 
-## 💡 สรุปความแตกต่าง
-- **Local/VPS**: ใช้ Nginx + Docker Compose (ที่เราทำไป) → ประหยัด, ควบคุมได้หมด
-- **PaaS (Netlify/Render)**: แยกส่วนกัน → ง่าย, สเกลง่าย, แต่ต้องระวังเรื่อง CORS และ URL ต่างโดเมน
+## 🔍 Troubleshooting (ถ้าข้อมูลไม่ขึ้น)
+
+### 1. ทำไมยังเรียก localhost:3000?
+เป็นเพราะ Quasar จำค่าตอนที่ Build ครั้งล่าสุดไว้:
+- **วิธีแก้**: เมื่อตั้งค่า Environment Variable ใน Netlify เสร็จแล้ว **ต้องกดปุ่ม "Deploy site" -> "Clear cache and deploy site"** อีก 1 รอบครับ เพื่อให้มัน Build ใหม่ด้วย URL ของ Render
+
+### 2. ทำไมขึ้น Internal Server Error (500)?
+มักเกิดจาก Backend เชื่อมต่อ Database ไม่ได้:
+- **รหัสผ่าน**: ตรวจสอบว่าใน Render ได้ใส่ `DATABASE_URL` โดยเปลี่ยน `#` เป็น `%23` หรือยัง?
+- **IP Allowlist**: ใน Supabase ต้องไปที่ **Settings > Network** แล้วกด **"Allow access from anywhere"** (หรือใส่ IP ของ Render) เพื่อให้ Render เข้าไปอ่านข้อมูลได้ครับ
+
+### 3. ตัวแปรใน Netlify
+แนะนำให้ใส่ทั้ง 2 ตัวเพื่อความชัวร์:
+- `VITE_API_URL` = `https://your-backend.onrender.com`
+- `API_URL` = `https://your-backend.onrender.com`

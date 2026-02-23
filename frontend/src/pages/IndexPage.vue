@@ -45,7 +45,8 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 // อ่านค่าจาก quasar.config → env.API_URL
-const API_URL = process.env.API_URL || 'http://localhost:3000';
+// อ่านค่าจาก quasar.config → env.API_URL
+const API_URL = process.env.API_URL || '';
 
 const tasks = ref([]);
 const loading = ref(false);

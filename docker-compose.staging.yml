@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  nginx:
+    ports:
+      - "8080:80"
+      - "8443:443"
+    environment:
+      - ENV=staging
+
+  backend:
+    environment:
+      - ENV=staging
+      - DEBUG=true

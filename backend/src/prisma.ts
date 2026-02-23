@@ -15,6 +15,11 @@ const adapter = connectionString ? new PrismaPg({
   connectionString,
 }) : undefined;
 
+// ใช้ global เดิมสำหรับ dev (nodemon reload แล้วไม่สร้าง client ซ้ำ)
+const globalForPrisma = globalThis as unknown as {
+  prisma?: PrismaClient;
+};
+
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
